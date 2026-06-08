@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Payroll Processing Toolkit</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: #0d1117;
+      color: #c9d1d9;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      color: #58a6ff;
+      margin-bottom: 8px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    p.subtitle {
+      color: #8b949e;
+      margin-bottom: 32px;
+      font-size: 0.85rem;
+    }
+
+    #output {
+      width: 100%;
+      max-width: 680px;
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 28px 32px;
+    }
+
+    .employee-card {
+      border-bottom: 1px solid #21262d;
+      padding: 16px 0;
+    }
+
+    .employee-card:last-child { border-bottom: none; }
+
+    .emp-name {
+      font-size: 1rem;
+      color: #58a6ff;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .pay-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      margin: 4px 0;
+      color: #8b949e;
+    }
+
+    .pay-row span:last-child { color: #c9d1d9; }
+    .pay-row.net-pay span { color: #3fb950; font-weight: bold; }
+    .pay-row.taxes span:last-child { color: #f85149; }
+  </style>
+</head>
+<body>
+  <h1>Payroll Processing Toolkit</h1>
+  <p class="subtitle">Open DevTools → Console to see full output &nbsp;|&nbsp; Results also rendered below</p>
+  <div id="output"></div>
+
+  <script src="cc_5.js"></script>
+  <script>
+    const container = document.getElementById("output");
+
+    employees.forEach((emp) => {
+      const p = processPayroll(emp);
+      container.innerHTML += `
+        <div class="employee-card">
+          <div class="emp-name">${p.name}</div>
+          <div class="pay-row"><span>Base Pay</span>     <span>$${p.basePay.toFixed(2)}</span></div>
+          <div class="pay-row"><span>Overtime Pay</span> <span>$${p.overtimePay.toFixed(2)}</span></div>
+          <div class="pay-row"><span>Gross Pay</span>    <span>$${p.grossPay.toFixed(2)}</span></div>
+          <div class="pay-row taxes"><span>Taxes (15%)</span> <span>−$${p.taxes.toFixed(2)}</span></div>
+          <div class="pay-row net-pay"><span>Net Pay</span>   <span>$${p.netPay.toFixed(2)}</span></div>
+        </div>`;
+    });
+  </script>
+</body>
+</html>
